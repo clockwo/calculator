@@ -183,3 +183,17 @@ body {
   border-color: var(--equal-color-border);
   background: var(--equal-color);
 }
+
+button {
+  transition: all 100ms ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  filter: brightness(95%);
+}
+
+button:active {
+  transform: scale(0.95);
+}
