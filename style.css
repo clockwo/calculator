@@ -1,0 +1,181 @@
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  font-family: inherit;
+}
+
+html {
+  color-scheme: dark light;
+}
+
+body {
+  min-height: 100vh;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Layout */
+
+:root {
+  --clr-background: hsl(29deg 74% 77%);
+  --clr-calc-background: hsl(25deg 14% 87%);
+
+  --dark-color: hsl(20deg 70% 41%);
+  --light-color: hsl(31deg 35% 94%);
+  --math-color: hsl(31deg 74% 68%);
+  --equal-color: hsl(274deg 7% 64%);
+  --white-color: whitesmoke;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--clr-background);
+  font-family: 'VT323', monospace;
+}
+
+.calculator {
+  width: min(100% - 1rem, 400px);
+  /* height: min(100vh - 2rem, 600px); */
+  background: var(--clr-calc-background);
+  /* border-radius: 25px; */
+  padding: 2.5rem 1rem;
+  position: relative;
+}
+
+.strips {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 10%;
+  gap: 0.3rem;
+  height: 15%;
+  z-index: 1;
+}
+
+.strip {
+  width: 10px;
+  height: 100%;
+}
+
+.strip-one {
+  background: hsl(5deg 76% 57%);
+}
+.strip-two {
+  background: hsl(48deg 80% 54%);
+}
+.strip-three {
+  background: hsl(209deg 87% 36%);
+}
+
+.calculator__screen {
+  z-index: 2;
+  position: relative;
+  background: hsl(59deg 19% 69%);
+  border: 10px solid hsl(0deg 0% 10%);
+  text-align: end;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.screen-output {
+  margin-top: 0.1em;
+  font-size: 70px;
+  color: hsl(295deg 3% 9%);
+}
+
+.screen-history {
+  font-size: 25px;
+  color: hsl(274deg 7% 54%);
+}
+
+.calculator__special {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+  margin-bottom: 1rem;
+}
+
+.specialBtn {
+  border: 8px solid hsl(295deg 3% 9%);
+  width: 60px;
+  height: 50px;
+}
+
+.removeBtn {
+  background: url('svg/delete.png') center center no-repeat, hsl(0deg 0% 30%);
+  background-size: 70%;
+}
+
+.returnBtn {
+  background: url('svg/return.png') center center no-repeat, hsl(0deg 0% 30%);
+  background-size: 50%;
+}
+
+.calculator__controls {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+
+  justify-content: space-between;
+  background: hsl(24deg 20% 76%);
+}
+
+.control {
+  width: calc(90% / 4);
+  margin-bottom: 0.3em;
+  height: 50px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsl(31deg 35% 94%);
+  border: 5px solid;
+  border-color: #e4d8ca;
+  color: hsl(20deg 70% 41%);
+}
+
+.control:nth-child(17) {
+  margin-bottom: 0;
+}
+
+.control:nth-child(18) {
+  margin-bottom: 0;
+}
+
+.control:nth-child(19) {
+  margin-bottom: 0;
+}
+
+.zero {
+  width: calc(90% / 1.85);
+}
+
+.math,
+.math-equal {
+  color: whitesmoke;
+}
+
+.math {
+  background: hsl(31deg 74% 68%);
+  border-color: hsl(20deg 70% 41%);
+}
+
+.math-equal {
+  border-color: hsl(272deg 7% 54%);
+  background: hsl(274deg 7% 64%);
+}
