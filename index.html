@@ -32,25 +32,27 @@
       </div>
 
       <div class="calculator__buttons">
-        <button class="button clear-button">C</button>
-        <button class="button math-button">+-</button>
-        <button class="button math-button">%</button>
-        <button class="button math-button">÷</button>
-        <button class="button">7</button>
-        <button class="button">8</button>
-        <button class="button">9</button>
-        <button class="button math-button">x</button>
-        <button class="button">4</button>
-        <button class="button">5</button>
-        <button class="button">6</button>
-        <button class="button math-button">-</button>
-        <button class="button">1</button>
-        <button class="button">2</button>
-        <button class="button">3</button>
-        <button class="button math-button">+</button>
-        <button class="button zero-button">0</button>
+        <button data-action="clear" class="button clear-button">C</button>
+        <button data-calc="powerTwo" class="button math-button">
+          x<sup>2</sup>
+        </button>
+        <button data-calc="percent" class="button math-button">%</button>
+        <button data-calc="divide" class="button math-button">÷</button>
+        <button data-calc="7" class="button">7</button>
+        <button data-calc="8" class="button">8</button>
+        <button data-calc="9" class="button">9</button>
+        <button data-calc="multiply" class="button math-button">x</button>
+        <button data-calc="4" class="button">4</button>
+        <button data-calc="5" class="button">5</button>
+        <button data-calc="6" class="button">6</button>
+        <button data-calc="minus" class="button math-button">-</button>
+        <button data-calc="1" class="button">1</button>
+        <button data-calc="2" class="button">2</button>
+        <button data-calc="3" class="button">3</button>
+        <button data-calc="plus" class="button math-button">+</button>
+        <button data-calc="0" class="button zero-button">0</button>
         <button class="button">.</button>
-        <button class="button equal-button">=</button>
+        <button data-action="equal" class="button equal-button">=</button>
       </div>
     </article>
   </body>
