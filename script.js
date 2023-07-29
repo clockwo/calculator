@@ -1,5 +1,12 @@
-calcArea = document.querySelector('.calculator__buttons');
-screenOutput = document.querySelector('.screen-output');
+//TODO
+// ! Change querySelector to take data from data-*
+// ! Function to arrow functions
+// ! deconstruct event
+
+calculatorButtonsElement = document.querySelector(
+  `[data-js-calculator-buttons]`
+);
+screenOutputElement = document.querySelector(`[data-js-screen-output]`);
 
 let mathSequence = [];
 let isOld = false;
@@ -8,51 +15,46 @@ const specialSymbols = {
   plus: '+',
   minus: '-',
   equal: '=',
+  multiply: '*',
+  divide: '÷',
 };
-
-function plus(x, y) {
-  return x + y;
-}
-
-function minus(x, y) {
-  return x - y;
-}
 
 const operators = {
-  plus: plus,
-  minus: minus,
+  plus: (x, y) => x + y,
+  minus: (x, y) => x - y,
+  multiply: (x, y) => x * y,
+  divide: (x, y) => x / y,
+  powerTwo: (x, y) => x,
 };
 
-function separate(specialSymbol) {
-  return mathSequence.join('').split(specialSymbol);
-}
+const separateString = (specialSymbol) =>
+  mathSequence.join('').split(specialSymbol);
 
-function updateScreen() {
+const addDigit = (input) => mathSequence.push(input);
+
+const updateScreen = () => {
   if (mathSequence.length > 0) {
-    screenOutput.innerHTML = mathSequence.join('');
+    screenOutputElement.innerHTML = mathSequence.join('');
   }
-}
+};
 
 function addSpecialSymbol(input, lastElement) {
-  for (const [key, item] of Object.entries(specialSymbols)) {
-    if (mathSequence.indexOf(item) > 0) {
-      let tempSpecial = item;
-      let [leftSide, rightSide] = [...separate(tempSpecial)];
-      let tempResult = operators[key](+leftSide, +rightSide);
-      mathSequence = `${tempResult}${tempSpecial}`.split('');
-      return;
-    }
-  }
+  const lastSpecialSymbol = specialSymbols[input];
   if (
     mathSequence.length > 0 &&
     !Object.values(specialSymbols).includes(lastElement)
   ) {
+    for (const [key, item] of Object.entries(specialSymbols)) {
+      if (mathSequence.indexOf(item) > 0) {
+        const tempSpecial = item;
+        const [leftSide, rightSide] = [...separateString(tempSpecial)];
+        const tempResult = operators[key](+leftSide, +rightSide);
+        mathSequence = `${tempResult}${lastSpecialSymbol}`.split('');
+        return;
+      }
+    }
     mathSequence.push(specialSymbols[input]);
   }
-}
-
-function addDigit(input) {
-  mathSequence.push(input);
 }
 
 function addToSequence(target) {
@@ -67,10 +69,10 @@ function addToSequence(target) {
   updateScreen();
 }
 
-calcArea.addEventListener('click', (event) => {
-  let button = event.target.closest('button');
+calculatorButtonsElement.addEventListener('click', ({ target }) => {
+  let button = target.closest('button');
   if (!button) return;
-  if (!calcArea.contains(button)) return;
+  if (!calculatorButtonsElement.contains(button)) return;
 
   addToSequence(button);
 });

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Meta and title -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
+
+    <!-- Fonts and styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,48 +14,74 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+
+    <!-- JavaScript -->
     <script src="./script.js" defer></script>
   </head>
   <body>
+    <!-- Calculator title -->
+    <h1>Calculator</h1>
+
+    <!-- Calculator body -->
     <article class="calculator">
+      <!-- Decorative strips -->
       <div class="strips">
         <div class="strip strip-one"></div>
         <div class="strip strip-two"></div>
         <div class="strip strip-three"></div>
       </div>
 
-      <div class="calculator__screen">
-        <h2 class="screen-output">1822</h2>
+      <!-- Screen -->
+      <section class="calculator__screen">
+        <h2 data-js-screen-output class="screen-output">1822</h2>
         <p class="screen-history">16*96/12-14</p>
-      </div>
+      </section>
 
+      <!-- Special buttons -->
       <div class="calculator__special">
-        <button class="returnBtn specialBtn"></button>
-        <button class="removeBtn specialBtn"></button>
+        <button type="button" class="returnBtn specialBtn"></button>
+        <button type="button" class="removeBtn specialBtn"></button>
       </div>
 
-      <div class="calculator__buttons">
-        <button data-action="clear" class="button clear-button">C</button>
-        <button data-calc="powerTwo" class="button math-button">
+      <!-- Calculator buttons -->
+      <div data-js-calculator-buttons class="calculator__buttons">
+        <button type="button" data-action="clear" class="button clear-button">
+          C
+        </button>
+        <button type="button" data-calc="powerTwo" class="button math-button">
           x<sup>2</sup>
         </button>
-        <button data-calc="percent" class="button math-button">%</button>
-        <button data-calc="divide" class="button math-button">÷</button>
-        <button data-calc="7" class="button">7</button>
-        <button data-calc="8" class="button">8</button>
-        <button data-calc="9" class="button">9</button>
-        <button data-calc="multiply" class="button math-button">x</button>
-        <button data-calc="4" class="button">4</button>
-        <button data-calc="5" class="button">5</button>
-        <button data-calc="6" class="button">6</button>
-        <button data-calc="minus" class="button math-button">-</button>
-        <button data-calc="1" class="button">1</button>
-        <button data-calc="2" class="button">2</button>
-        <button data-calc="3" class="button">3</button>
-        <button data-calc="plus" class="button math-button">+</button>
-        <button data-calc="0" class="button zero-button">0</button>
-        <button class="button">.</button>
-        <button data-action="equal" class="button equal-button">=</button>
+        <button type="button" data-calc="percent" class="button math-button">
+          %
+        </button>
+        <button type="button" data-calc="divide" class="button math-button">
+          ÷
+        </button>
+        <button type="button" data-calc="7" class="button">7</button>
+        <button type="button" data-calc="8" class="button">8</button>
+        <button type="button" data-calc="9" class="button">9</button>
+        <button type="button" data-calc="multiply" class="button math-button">
+          x
+        </button>
+        <button type="button" data-calc="4" class="button">4</button>
+        <button type="button" data-calc="5" class="button">5</button>
+        <button type="button" data-calc="6" class="button">6</button>
+        <button type="button" data-calc="minus" class="button math-button">
+          -
+        </button>
+        <button type="button" data-calc="1" class="button">1</button>
+        <button type="button" data-calc="2" class="button">2</button>
+        <button type="button" data-calc="3" class="button">3</button>
+        <button type="button" data-calc="plus" class="button math-button">
+          +
+        </button>
+        <button type="button" data-calc="0" class="button zero-button">
+          0
+        </button>
+        <button type="button" class="button">.</button>
+        <button type="button" data-action="equal" class="button equal-button">
+          =
+        </button>
       </div>
     </article>
   </body>

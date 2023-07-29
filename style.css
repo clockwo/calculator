@@ -48,9 +48,14 @@ video {
 body {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   background: var(--clr-background);
   font-family: 'VT323', monospace;
+}
+
+h1 {
+  font-size: 70px;
 }
 
 .calculator {
