@@ -99,7 +99,9 @@ h1 {
   border: 10px solid hsl(0deg 0% 10%);
   text-align: end;
   padding: 0.5rem 1rem;
+  min-height: 157px;
   margin-bottom: 1rem;
+  overflow-x: auto;
 }
 
 .screen-output {

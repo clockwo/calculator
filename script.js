@@ -1,7 +1,6 @@
 //TODO
-// ! Change querySelector to take data from data-*
-// ! Function to arrow functions
-// ! deconstruct event
+//! % button
+//! powerTwo button
 
 calculatorButtonsElement = document.querySelector(
   `[data-js-calculator-buttons]`
@@ -32,13 +31,22 @@ const operators = {
   divide: (x, y) => x / y,
 };
 
+const actions = {
+  clear: () => {
+    calculationSequence = [];
+  },
+  deleteLastIndex: () => {
+    calculationSequence.pop();
+  },
+};
+
 const splitCalculationAtSymbol = (specialSymbol) =>
   calculationSequence.join('').split(specialSymbol);
 
 const appendToCalculationSequence = (input) => calculationSequence.push(input);
 
 const displayCalculationSequence = () => {
-  if (calculationSequence.length > 0) {
+  if (calculationSequence.length >= 0) {
     screenOutputElement.innerHTML = calculationSequence.join('');
   }
 };
@@ -91,30 +99,22 @@ const processOperationSymbol = (input, lastElement) => {
     calculationSequence.push(lastSpecialSymbol);
   }
 };
-// function processOperationSymbol(input, lastElement) {
-//   const lastSpecialSymbol = operationSymbols[input];
 
-//   if (isSequenceNotEmptyAndLastElementNotSpecial(lastElement)) {
-//     processExistingSpecialSymbolInSequence(lastSpecialSymbol);
-//     lastElement = calculationSequence[calculationSequence.length - 1];
-//   }
-
-//   if (shouldAddSpecialSymbolToSequence(lastElement, lastSpecialSymbol)) {
-//     calculationSequence.push(lastSpecialSymbol);
-//   }
-// }
-
-function processUserInput(target) {
+const processUserInput = (target) => {
   const userInput = target.dataset.calc;
+  const userAction = target.dataset.action;
   const lastElement = calculationSequence[calculationSequence.length - 1];
 
   if (userInput in operationSymbols) {
     processOperationSymbol(userInput, lastElement);
+  } else if (userAction) {
+    actions[userAction]();
   } else {
     appendToCalculationSequence(userInput);
   }
+
   displayCalculationSequence();
-}
+};
 
 calculatorButtonsElement.addEventListener('click', ({ target }) => {
   let button = target.closest('button');
@@ -123,9 +123,3 @@ calculatorButtonsElement.addEventListener('click', ({ target }) => {
 
   processUserInput(button);
 });
-
-// 15 + 20 + 30 + 40 * 2 + 50 * 3 / 2 * 5 ->
-// 15 + 20 + 30 + (40 * 2) + (((50 * 3) / 2) * 5)
-//find first * or any high operator, and take left and right index
-
-//del with special symbol
