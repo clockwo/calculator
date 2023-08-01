@@ -8,10 +8,9 @@ calculatorButtonsElement = document.querySelector(
 );
 screenOutputElement = document.querySelector(`[data-js-screen-output]`);
 
-let mathSequence = [];
-let isOld = false;
+let calculationSequence = [];
 
-const specialSymbols = {
+const operationSymbols = {
   plus: '+',
   minus: '-',
   equal: '=',
@@ -19,54 +18,102 @@ const specialSymbols = {
   divide: '÷',
 };
 
+const conditionChecks = {
+  isMathSequenceNotEmpty: () => calculationSequence.length > 0,
+  isLastElementNotSpecialSymbol: (lastElement) =>
+    !Object.values(operationSymbols).includes(lastElement),
+  isLastSpecialSymbolNotEqual: (lastSpecialSymbol) => lastSpecialSymbol !== '=',
+};
+
 const operators = {
   plus: (x, y) => x + y,
   minus: (x, y) => x - y,
   multiply: (x, y) => x * y,
   divide: (x, y) => x / y,
-  powerTwo: (x, y) => x,
 };
 
-const separateString = (specialSymbol) =>
-  mathSequence.join('').split(specialSymbol);
+const splitCalculationAtSymbol = (specialSymbol) =>
+  calculationSequence.join('').split(specialSymbol);
 
-const addDigit = (input) => mathSequence.push(input);
+const appendToCalculationSequence = (input) => calculationSequence.push(input);
 
-const updateScreen = () => {
-  if (mathSequence.length > 0) {
-    screenOutputElement.innerHTML = mathSequence.join('');
+const displayCalculationSequence = () => {
+  if (calculationSequence.length > 0) {
+    screenOutputElement.innerHTML = calculationSequence.join('');
   }
 };
 
-function addSpecialSymbol(input, lastElement) {
-  const lastSpecialSymbol = specialSymbols[input];
-  if (
-    mathSequence.length > 0 &&
-    !Object.values(specialSymbols).includes(lastElement)
-  ) {
-    for (const [key, item] of Object.entries(specialSymbols)) {
-      if (mathSequence.indexOf(item) > 0) {
-        const tempSpecial = item;
-        const [leftSide, rightSide] = [...separateString(tempSpecial)];
-        const tempResult = operators[key](+leftSide, +rightSide);
-        mathSequence = `${tempResult}${lastSpecialSymbol}`.split('');
-        return;
-      }
-    }
-    mathSequence.push(specialSymbols[input]);
-  }
-}
+const findSpecialSymbolInMathSequence = () => {
+  return Object.keys(operationSymbols).find((key) =>
+    calculationSequence.includes(operationSymbols[key])
+  );
+};
 
-function addToSequence(target) {
+const isSequenceNotEmptyAndLastElementNotSpecial = (lastElement) => {
+  return (
+    conditionChecks.isMathSequenceNotEmpty() &&
+    conditionChecks.isLastElementNotSpecialSymbol(lastElement)
+  );
+};
+
+const shouldAddSpecialSymbolToSequence = (lastElement, lastSpecialSymbol) => {
+  return (
+    conditionChecks.isLastSpecialSymbolNotEqual(lastSpecialSymbol) &&
+    conditionChecks.isLastElementNotSpecialSymbol(lastElement)
+  );
+};
+
+const processExistingSpecialSymbolInSequence = (lastSpecialSymbol) => {
+  const specialSymbolKey = findSpecialSymbolInMathSequence();
+  if (specialSymbolKey) {
+    const [leftSide, rightSide] = splitCalculationAtSymbol(
+      operationSymbols[specialSymbolKey]
+    );
+    const tempResult = operators[specialSymbolKey](+leftSide, +rightSide);
+
+    calculationSequence = conditionChecks.isLastSpecialSymbolNotEqual(
+      lastSpecialSymbol
+    )
+      ? `${tempResult}${lastSpecialSymbol}`.split('')
+      : `${tempResult}`.split('');
+  }
+};
+
+const processOperationSymbol = (input, lastElement) => {
+  const lastSpecialSymbol = operationSymbols[input];
+
+  if (isSequenceNotEmptyAndLastElementNotSpecial(lastElement)) {
+    processExistingSpecialSymbolInSequence(lastSpecialSymbol);
+    lastElement = calculationSequence[calculationSequence.length - 1];
+  }
+
+  if (shouldAddSpecialSymbolToSequence(lastElement, lastSpecialSymbol)) {
+    calculationSequence.push(lastSpecialSymbol);
+  }
+};
+// function processOperationSymbol(input, lastElement) {
+//   const lastSpecialSymbol = operationSymbols[input];
+
+//   if (isSequenceNotEmptyAndLastElementNotSpecial(lastElement)) {
+//     processExistingSpecialSymbolInSequence(lastSpecialSymbol);
+//     lastElement = calculationSequence[calculationSequence.length - 1];
+//   }
+
+//   if (shouldAddSpecialSymbolToSequence(lastElement, lastSpecialSymbol)) {
+//     calculationSequence.push(lastSpecialSymbol);
+//   }
+// }
+
+function processUserInput(target) {
   const userInput = target.dataset.calc;
-  const lastElement = mathSequence[mathSequence.length - 1];
+  const lastElement = calculationSequence[calculationSequence.length - 1];
 
-  if (userInput in specialSymbols) {
-    addSpecialSymbol(userInput, lastElement);
+  if (userInput in operationSymbols) {
+    processOperationSymbol(userInput, lastElement);
   } else {
-    addDigit(userInput);
+    appendToCalculationSequence(userInput);
   }
-  updateScreen();
+  displayCalculationSequence();
 }
 
 calculatorButtonsElement.addEventListener('click', ({ target }) => {
@@ -74,7 +121,7 @@ calculatorButtonsElement.addEventListener('click', ({ target }) => {
   if (!button) return;
   if (!calculatorButtonsElement.contains(button)) return;
 
-  addToSequence(button);
+  processUserInput(button);
 });
 
 // 15 + 20 + 30 + 40 * 2 + 50 * 3 / 2 * 5 ->
