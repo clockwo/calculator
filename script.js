@@ -10,11 +10,11 @@ screenOutputElement = document.querySelector(`[data-js-screen-output]`);
 let calculationSequence = [];
 
 const operationSymbols = {
+  multiply: '*',
+  divide: '÷',
   plus: '+',
   minus: '-',
   equal: '=',
-  multiply: '*',
-  divide: '÷',
 };
 
 const conditionChecks = {
@@ -40,8 +40,18 @@ const actions = {
   },
 };
 
-const splitCalculationAtSymbol = (specialSymbol) =>
-  calculationSequence.join('').split(specialSymbol);
+const splitCalculationAtSymbol = (specialSymbol) => {
+  if (calculationSequence[0] === '-') {
+    let tempStr = calculationSequence.join('');
+    console.debug(tempStr);
+
+    let newTemp = tempStr.slice(1).split(specialSymbol);
+    newTemp[0] = `-${newTemp[0]}`;
+    console.debug(newTemp);
+    return newTemp;
+  }
+  return calculationSequence.join('').split(specialSymbol);
+};
 
 const appendToCalculationSequence = (input) => calculationSequence.push(input);
 
@@ -67,7 +77,8 @@ const isSequenceNotEmptyAndLastElementNotSpecial = (lastElement) => {
 const shouldAddSpecialSymbolToSequence = (lastElement, lastSpecialSymbol) => {
   return (
     conditionChecks.isLastSpecialSymbolNotEqual(lastSpecialSymbol) &&
-    conditionChecks.isLastElementNotSpecialSymbol(lastElement)
+    conditionChecks.isLastElementNotSpecialSymbol(lastElement) &&
+    conditionChecks.isMathSequenceNotEmpty()
   );
 };
 
@@ -77,6 +88,12 @@ const processExistingSpecialSymbolInSequence = (lastSpecialSymbol) => {
     const [leftSide, rightSide] = splitCalculationAtSymbol(
       operationSymbols[specialSymbolKey]
     );
+
+    //I don't know how to fix that in proper way, so be it
+    if (!rightSide) {
+      return;
+    }
+
     const tempResult = operators[specialSymbolKey](+leftSide, +rightSide);
 
     calculationSequence = conditionChecks.isLastSpecialSymbolNotEqual(
