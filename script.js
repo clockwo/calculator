@@ -53,13 +53,10 @@ const actions = {
 
 const splitCalculationAtSymbol = (specialSymbol) => {
   if (calculationSequence[0] === '-') {
-    let tempStr = calculationSequence.join('');
-    console.debug(tempStr);
-
-    let newTemp = tempStr.slice(1).split(specialSymbol);
-    newTemp[0] = `-${newTemp[0]}`;
-    console.debug(newTemp);
-    return newTemp;
+    const joinedSequence = calculationSequence.join('');
+    let splitSequence = joinedSequence.slice(1).split(specialSymbol);
+    splitSequence[0] = `-${splitSequence[0]}`;
+    return splitSequence;
   }
   return calculationSequence.join('').split(specialSymbol);
 };
