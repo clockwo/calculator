@@ -1,7 +1,3 @@
-//TODO
-//! % button
-//! powerTwo button
-
 calculatorButtonsElement = document.querySelector(
   `[data-js-calculator-buttons]`
 );
@@ -31,6 +27,19 @@ const operators = {
   divide: (x, y) => x / y,
 };
 
+const createOperationFunction =
+  (operation) =>
+  (x = calculationSequence.join('')) => {
+    const specialSymbolKey = findSpecialSymbolInMathSequence();
+    if (specialSymbolKey) {
+      const operator = operationSymbols[specialSymbolKey];
+      let [left, right] = x.split(operator);
+      calculationSequence = `${left}${operator}${operation(right)}`.split('');
+      return;
+    }
+    calculationSequence = `${operation(x)}`.split('');
+  };
+
 const actions = {
   clear: () => {
     calculationSequence = [];
@@ -38,6 +47,8 @@ const actions = {
   deleteLastIndex: () => {
     calculationSequence.pop();
   },
+  powerTwo: createOperationFunction((x) => x ** 2),
+  percent: createOperationFunction((x) => x / 100),
 };
 
 const splitCalculationAtSymbol = (specialSymbol) => {
@@ -90,6 +101,8 @@ const processExistingSpecialSymbolInSequence = (lastSpecialSymbol) => {
     );
 
     //I don't know how to fix that in proper way, so be it
+    //Bug is show then we have for example -4 and press equal lead to NaN
+    //This small condition handle that
     if (!rightSide) {
       return;
     }
