@@ -139,10 +139,12 @@ h1 {
 }
 
 .button {
-  width: calc(90% / 4);
+  flex-basis: calc(90% / 4);
   margin-bottom: 0.3em;
+
   height: 50px;
-  font-size: 40px;
+  font-size: 25px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,7 +159,7 @@ h1 {
 }
 
 .zero-button {
-  width: calc(90% / 1.85);
+  flex-basis: calc(90% / 1.85);
 }
 
 .math-button,
