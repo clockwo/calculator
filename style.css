@@ -110,11 +110,6 @@ h1 {
   color: hsl(295deg 3% 9%);
 }
 
-.screen-history {
-  font-size: 25px;
-  color: hsl(274deg 7% 54%);
-}
-
 .calculator__special {
   width: 100%;
   display: flex;
@@ -132,11 +127,6 @@ h1 {
 .removeBtn {
   background: url('svg/delete.png') center center no-repeat, hsl(0deg 0% 30%);
   background-size: 70%;
-}
-
-.returnBtn {
-  background: url('svg/return.png') center center no-repeat, hsl(0deg 0% 30%);
-  background-size: 50%;
 }
 
 .calculator__buttons {
